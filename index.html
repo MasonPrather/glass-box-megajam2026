@@ -12,11 +12,31 @@
     main { max-width: 43rem; margin: auto; padding: clamp(2rem, 7vw, 5rem) 1.25rem; }
     header { padding-bottom: 1.4rem; border-bottom: 1px solid #6c5339; }
     .context { color: #dec092; font-size: .88rem; font-weight: 600; letter-spacing: .045em; }
-    h1, h2 { font-family: Georgia, serif; }
+    h1, h2, h3 { font-family: Georgia, serif; }
     h1 { font-size: clamp(2.45rem, 8vw, 4.5rem); line-height: .98; margin: .5rem 0 .8rem; text-wrap: balance; }
     h2 { font-size: clamp(1.4rem, 4vw, 1.85rem); margin: 2rem 0 .55rem; text-wrap: balance; }
     p { margin: 0 0 1rem; line-height: 1.65; }
     header p { margin-bottom: 0; }
+    article > section { margin-top: 2.2rem; }
+    h3 { font-size: clamp(1.15rem, 3vw, 1.42rem); margin: .12rem 0 .35rem; }
+    .timeline { margin: 1.3rem 0; padding: 0 0 0 1.1rem; border-left: 1px solid #6c5339; list-style: none; }
+    .timeline > li { margin: 0 0 1.35rem; }
+    .timeline time, .capture-meta { font-size: .86rem; font-weight: 650; color: #dec092; }
+    .capture { margin: 1.1rem 0 2rem; border: 1px solid #6c5339; border-radius: .5rem; overflow: hidden; background: #211d18; }
+    .capture-frame { position: relative; background: #16130f; }
+    .capture-frame img { display: block; width: 100%; height: auto; }
+    .callout {
+      position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+      display: grid; place-items: center; width: clamp(1.2rem, 3vw, 1.65rem); aspect-ratio: 1;
+      border: 2px solid #2c1c0c; border-radius: 50%; background: #ffd187; color: #241708;
+      font-size: clamp(.68rem, 2vw, .87rem); font-weight: 800; box-shadow: 0 1px 7px #000a;
+    }
+    figcaption { padding: .9rem 1rem 1rem; }
+    figcaption p { margin: 0; }
+    figcaption ol { margin: .4rem 0 0; padding-left: 1.35rem; }
+    figcaption li { margin-top: .25rem; line-height: 1.48; }
+    figcaption li::marker { color: #ffd187; font-weight: 700; }
+    .postscript { border-top: 1px solid #6c5339; margin-top: 2rem; }
     a { color: #ffd69d; text-underline-offset: .16em; }
     a:focus-visible { outline: 2px solid #ffd69d; outline-offset: 3px; }
   </style>
@@ -27,23 +47,110 @@
       <header>
         <p class="context">2026 Epic AI MegaJam · Glass Box Development Log</p>
         <h1>What the Tower Keeps</h1>
-        <p>By Mason Prather · <time datetime="2026-11-16">November 16, 2026</time></p>
+        <p>By Mason Prather · November 12–16, 2026</p>
+        <p>Jam submission build · Alpha 0.3 Win64</p>
       </header>
       <h2>One floor taught us what the tower needed</h2>
       <p>I built <em>What the Tower Keeps</em> around one repeatable decision for the jam’s <strong>Director’s Cut</strong> theme. Which route is worth taking next? Four dungeons branch out from the same hub. Each guardian leaves a physical key, and each key opens a shortcut back. Four keys let the player pull the lever that opens the boss gate. The hub is where the player turns the run’s rewards into a build before ascending.</p>
       <p>The first playable slice was one floor. It gave me a complete path to test, from the first fight to the boss and back to a saved checkpoint. By Alpha 0.3, the loop ran across the Slime Floor, the Ossuary, and the Foundry. Procedural layouts vary the route interiors while the hub, guardian keys, shortcuts, and boss gate stay recognizable. Keeping those landmarks stable made it easier to learn a floor even as the rooms changed.</p>
+      <section aria-labelledby="jam-timeline">
+        <h2 id="jam-timeline">Four days of building and playtesting</h2>
+        <ol class="timeline" role="list">
+          <li>
+            <time datetime="2026-11-12">November 12</time>
+            <h3>Make the first floor playable</h3>
+            <p>I built the Slime Floor around four guardians, physical key pickups, and a boss gate. When the Mac guest moved on their screen and stood still on Windows, we traced it to how each machine treated the floor collision. A matching two-device retest confirmed normal guest movement, revival at the hub, and Ascend into the Ossuary.</p>
+          </li>
+          <li>
+            <time datetime="2026-11-13">November 13</time>
+            <h3>Make a dodge and return trip feel better</h3>
+            <p>Fighting skeletons in the Crypt showed me how sluggish a light attack felt coming out of a quickstep. I retested a faster follow-up. For the reverse transition, the heavier Vanguard got a shorter input buffer than the mobility build. I also added a shortcut back to the hub after picking up a guardian’s key. The Mac test checked all eight return pads across the two playable floors.</p>
+          </li>
+          <li>
+            <time datetime="2026-11-14">November 14</time>
+            <h3>Give the Foundry hazards a readable warning</h3>
+            <p>I missed the steam warnings on my first Foundry clear. We made the grates change color before firing and marked the paths that stay safe. On the retest I saw both safe routes, and the log recorded zero steam hits. Later that day we added seeded side passages, stairs, and ladders so a route could reward exploration as well as progress toward its guardian.</p>
+          </li>
+          <li>
+            <time datetime="2026-11-15">November 15</time>
+            <h3>Assemble and test Alpha 0.3</h3>
+            <p>Six character variants passed rendered New Game, starter combat, and cleared-hub reload checks on Mac. I froze Alpha 0.2 and used Alpha 0.3 to bring together the voiced opening, outdoor practice area, and three-floor tower. The extracted Mac package passed the opening, a full solo circuit with checkpoint reload, and a local co-op check before the Windows jam build was finished.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="three-captures">
+        <h2 id="three-captures">Three captures from development</h2>
+        <figure class="capture">
+          <div class="capture-frame">
+            <img src="captures/slime-floor-blockout.png" width="1280" height="800" loading="lazy" alt="A gray player model stands on the early Slime Floor hub’s gold pad, facing numbered entrances and the four-key boss gate.">
+            <span class="callout" aria-hidden="true" style="--x:22.5%; --y:34%">1</span>
+            <span class="callout" aria-hidden="true" style="--x:35.4%; --y:15.6%">2</span>
+          </div>
+          <figcaption>
+            <p class="capture-meta">November 13 · Two-floor Mac demo</p>
+            <ol>
+              <li>Numbered signs identify Verdigris and Grotto, two routes out of the central hub.</li>
+              <li>The boss gate makes the four-key objective visible alongside the routes.</li>
+            </ol>
+          </figcaption>
+        </figure>
+        <figure class="capture">
+          <div class="capture-frame">
+            <img src="captures/foundry-encounter.png" width="1280" height="720" loading="lazy" alt="A player waits inside a stone Foundry chamber. The central gate and side passage are closed, and the HUD announces an incoming wave.">
+            <span class="callout" aria-hidden="true" style="--x:15.5%; --y:34%">1</span>
+            <span class="callout" aria-hidden="true" style="--x:55.2%; --y:49%">2</span>
+            <span class="callout" aria-hidden="true" style="--x:74.5%; --y:19%">3</span>
+          </div>
+          <figcaption>
+            <p class="capture-meta">November 15 · Alpha 0.3 Foundry editor preview</p>
+            <ol>
+              <li>The left doorway marks a possible side passage in this layout.</li>
+              <li>The lowered gate shows the encounter is sealed.</li>
+              <li>The HUD shows that the first of two waves is incoming.</li>
+            </ol>
+          </figcaption>
+        </figure>
+        <figure class="capture">
+          <div class="capture-frame">
+            <img src="captures/tower-approach.png" width="1280" height="720" loading="lazy" alt="An unarmed character walks toward a circular practice target on the path to a lit tower arch.">
+            <span class="callout" aria-hidden="true" style="--x:56.2%; --y:41%">1</span>
+            <span class="callout" aria-hidden="true" style="--x:59.7%; --y:23%">2</span>
+          </div>
+          <figcaption>
+            <p class="capture-meta">November 15 · Alpha 0.3 tutorial editor test</p>
+            <ol>
+              <li>The practice target teaches the player’s first unarmed strike.</li>
+              <li>The lit arch makes the destination visible from the practice area.</li>
+            </ol>
+          </figcaption>
+        </figure>
+      </section>
+
       <h2>Playtesting changed the opening and combat</h2>
       <p>Attacks felt too fast in early builds, including moments when damage arrived ahead of the motion. We started treating windup, contact, and recovery as three separate things to tune. We slowed the attack and checked that animation and damage landed together. The weapon kits still needed different rhythms, so we checked both the hit and the next available action by kit.</p>
       <p>We also added a playable approach to the tower. The player starts unarmed, learns a punch on a practice target, and chooses a weapon at the Armory after entering. That gave the first weapon choice a place in the story and let the player try movement and combat on the way to the door. In Alpha 0.4 I enclosed the approach with visible fog and gave the tower a physical doorway and closing portcullis. I reworked the opening cameras to keep the selected character visible and upright.</p>
       <p>The controller pass added deadzones to stop idle stick drift while keeping deliberate aim and target switching. I also moved room names out of the space and into a first-visit title on each player’s HUD. In co-op, a teammate can cross a threshold before you do. Your title appears when you discover the dungeon yourself. A physical crest near each entrance marks its shared key state. The route stays open after a clear.</p>
       <h2>A second player exposed a different bug</h2>
-      <p>In the first Windows and Mac session, the guest moved on their own screen while the host saw them stand still. The client log showed that the guest could not resolve the floor component referenced in the host’s movement corrections. The floor collision should have been static. Once we changed it, a two-process Mac regression drove the guest with normal keyboard input, forced a server correction, and checked that both ends agreed on the guest’s movement. The same regression checked revival and Ascend. Those results describe a local two-process check. The current release candidate still needs its own two-device playtest.</p>
+      <p>In the first Windows and Mac session, the guest moved on their own screen while the host saw them stand still. The client log showed that the guest could not resolve the floor component referenced in the host’s movement corrections. The floor collision should have been static. Once we changed it, a two-process Mac regression drove the guest with normal keyboard input, forced a server correction, and checked that both ends agreed on the guest’s movement. The same regression checked revival and Ascend. Those results describe a local two-process check.</p>
       <h2>How I worked with AI</h2>
       <p>I set the game’s direction and scope, played the builds, and decided what to change after seeing the results. Codex helped with C++ implementation, debugging, automation, and build checks. I split work across gameplay, world, UI, progression, presentation, networking, and release QA. Each team returned its changes and evidence for integration. Unreal Engine 5.8.4 was the game runtime and Unreal’s automation framework provided repeatable checks alongside hands-on play.</p>
       <p>Before the jam I prepared the concept notes, toolchain, build and test wrappers, and disposable import and packaging probes. The probes let me identify setup failures before the contest window. The playable tower was built during the jam.</p>
+      <section aria-labelledby="avatar-handoff">
+        <h2 id="avatar-handoff">An AI handoff you can see in the game</h2>
+        <p>I asked the Art agents to fit six Meshy character bodies to the same Unreal skeleton. An early weight check registered movement in the combined mesh. In an isolated bend, the borrowed glove followed the bone while the sleeve stayed put. Art checked the weights by body region, corrected the affected areas, and handed the reviewed meshes to the shared catalog used by both New Game and the playable character.</p>
+        <p>I held the preview until all six bodies passed rendered New Game, starter combat, and cleared-hub reload on Mac. Then I cleared the Slime Floor as Knight Broad and climbed into the Ossuary. The combat pass let me check the skirt and armor in motion. After seeing all six choices on the title screen, I asked for an avatar preview about 2.5 times larger so players could see the differences.</p>
+      </section>
+
       <h2>Build checks</h2>
-      <p>The Alpha 0.3 Mac package completed the opening and a three-floor solo circuit, and a rendered guest joined in local loopback. The Windows 11 build passed a fresh extraction, launch, New Game, and movement in the outdoor tutorial.</p>
-      <p>The Alpha 0.4 Mac opening candidate passed the voiced intro, practice-target and door sequence, and reload into the hub. The input fixture verified that neutral sticks stayed still and a deliberate flick switched lock-on targets. The later dungeon presentation package passed the Mac cook audit and clean extraction. I ran a rendered host and guest on one Mac, both at 1280 × 720. The host entered Verdigris first and only its HUD showed the name. The guest got its own title on entering later. Both clients stayed quiet on revisits, then each showed Grotto on its first entry. One startup attempt and one synchronization attempt failed before the successful run. Windows 11 testing for Alpha 0.4 is still pending.</p>
+      <p>The Alpha 0.3 Mac package completed the opening and a three-floor solo circuit, and a rendered guest joined in local loopback. The submitted Windows 11 build passed a fresh extraction, launch, New Game, and movement in the outdoor tutorial.</p>
+      <p>The Alpha 0.4 Mac opening candidate passed the voiced intro, practice-target and door sequence, and reload into the hub. The input fixture verified that neutral sticks stayed still and a deliberate flick switched lock-on targets. The later dungeon presentation package passed the Mac cook audit and clean extraction. I ran a rendered host and guest on one Mac, both at 1280 × 720. The host entered Verdigris first and only its HUD showed the name. The guest got its own title on entering later. Both clients stayed quiet on revisits, then each showed Grotto on its first entry. One startup attempt and one synchronization attempt failed before the successful run.</p>
+      <section class="postscript" aria-labelledby="after-submission">
+        <h2 id="after-submission">November 16 · After submission</h2>
+        <p><strong>Alpha 0.3 Win64 was the build I submitted to the MegaJam.</strong> The later Alpha 0.4 Windows build hit a compiler error where a local name matched an inherited Unreal member. After renaming the local, it compiled with the normal MSVC warning settings.</p>
+        <p>From a fresh Alpha 0.4 ZIP extraction on Windows 11 with default D3D12 and the editor closed, the build reached the title screen, accepted a New Game selection, registered the tutorial strike, and reached the Slime Floor hub. That Win64 smoke test passed after the Alpha 0.3 submission. The rendered two-player dungeon-title check described above ran on Mac.</p>
+      </section>
+
       <p><a href="https://www.youtube.com/watch?v=prsXkAmUwSo" rel="noreferrer">Watch the Alpha 0.3 gameplay trailer</a></p>
     </article>
   </main>
