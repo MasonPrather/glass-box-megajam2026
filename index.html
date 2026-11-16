@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="description" content="Mason Prather’s Epic AI MegaJam 2026 Glass Box development log for What the Tower Keeps.">
+  <title>What the Tower Keeps · Glass Box Development Log</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; color: #f0e7d8; background: #191714; }
+    body { margin: 0; }
+    main { max-width: 43rem; margin: auto; padding: clamp(2rem, 7vw, 5rem) 1.25rem; }
+    header { padding-bottom: 1.4rem; border-bottom: 1px solid #6c5339; }
+    .context { color: #dec092; font-size: .88rem; font-weight: 600; letter-spacing: .045em; }
+    h1, h2 { font-family: Georgia, serif; }
+    h1 { font-size: clamp(2.45rem, 8vw, 4.5rem); line-height: .98; margin: .5rem 0 .8rem; text-wrap: balance; }
+    h2 { font-size: clamp(1.4rem, 4vw, 1.85rem); margin: 2rem 0 .55rem; text-wrap: balance; }
+    p { margin: 0 0 1rem; line-height: 1.65; }
+    header p { margin-bottom: 0; }
+    a { color: #ffd69d; text-underline-offset: .16em; }
+    a:focus-visible { outline: 2px solid #ffd69d; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <article>
+      <header>
+        <p class="context">2026 Epic AI MegaJam · Glass Box Development Log</p>
+        <h1>What the Tower Keeps</h1>
+        <p>By Mason Prather · <time datetime="2026-11-16">November 16, 2026</time></p>
+      </header>
+      <h2>One floor taught us what the tower needed</h2>
+      <p>I built <em>What the Tower Keeps</em> around one repeatable decision for the jam’s <strong>Director’s Cut</strong> theme. Which route is worth taking next? Four dungeons branch out from the same hub. Each guardian leaves a physical key, and each key opens a shortcut back. Four keys let the player pull the lever that opens the boss gate. The hub is where the player turns the run’s rewards into a build before ascending.</p>
+      <p>The first playable slice was one floor. It gave me a complete path to test, from the first fight to the boss and back to a saved checkpoint. By Alpha 0.3, the loop ran across the Slime Floor, the Ossuary, and the Foundry. Procedural layouts vary the route interiors while the hub, guardian keys, shortcuts, and boss gate stay recognizable. Keeping those landmarks stable made it easier to learn a floor even as the rooms changed.</p>
+      <h2>Playtesting changed the opening and combat</h2>
+      <p>Attacks felt too fast in early builds, including moments when damage arrived ahead of the motion. We started treating windup, contact, and recovery as three separate things to tune. We slowed the attack and checked that animation and damage landed together. The weapon kits still needed different rhythms, so we checked both the hit and the next available action by kit.</p>
+      <p>We also added a playable approach to the tower. The player starts unarmed, learns a punch on a practice target, and chooses a weapon at the Armory after entering. That gave the first weapon choice a place in the story and let the player try movement and combat on the way to the door. In Alpha 0.4 I enclosed the approach with visible fog and gave the tower a physical doorway and closing portcullis. I reworked the opening cameras to keep the selected character visible and upright.</p>
+      <p>The controller pass added deadzones to stop idle stick drift while keeping deliberate aim and target switching. I also moved room names out of the space and into a first-visit title on each player’s HUD. In co-op, a teammate can cross a threshold before you do. Your title appears when you discover the dungeon yourself. A physical crest near each entrance marks its shared key state. The route stays open after a clear.</p>
+      <h2>A second player exposed a different bug</h2>
+      <p>In the first Windows and Mac session, the guest moved on their own screen while the host saw them stand still. The client log showed that the guest could not resolve the floor component referenced in the host’s movement corrections. The floor collision should have been static. Once we changed it, a two-process Mac regression drove the guest with normal keyboard input, forced a server correction, and checked that both ends agreed on the guest’s movement. The same regression checked revival and Ascend. Those results describe a local two-process check. The current release candidate still needs its own two-device playtest.</p>
+      <h2>How I worked with AI</h2>
+      <p>I set the game’s direction and scope, played the builds, and decided what to change after seeing the results. Codex helped with C++ implementation, debugging, automation, and build checks. I split work across gameplay, world, UI, progression, presentation, networking, and release QA. Each team returned its changes and evidence for integration. Unreal Engine 5.8.4 was the game runtime and Unreal’s automation framework provided repeatable checks alongside hands-on play.</p>
+      <p>Before the jam I prepared the concept notes, toolchain, build and test wrappers, and disposable import and packaging probes. The probes let me identify setup failures before the contest window. The playable tower was built during the jam.</p>
+      <h2>Build checks</h2>
+      <p>The Alpha 0.3 Mac package completed the opening and a three-floor solo circuit, and a rendered guest joined in local loopback. The Windows 11 build passed a fresh extraction, launch, New Game, and movement in the outdoor tutorial.</p>
+      <p>The Alpha 0.4 Mac opening candidate passed the voiced intro, practice-target and door sequence, and reload into the hub. The input fixture verified that neutral sticks stayed still and a deliberate flick switched lock-on targets. The later dungeon presentation package passed the Mac cook audit and clean extraction. I ran a rendered host and guest on one Mac, both at 1280 × 720. The host entered Verdigris first and only its HUD showed the name. The guest got its own title on entering later. Both clients stayed quiet on revisits, then each showed Grotto on its first entry. One startup attempt and one synchronization attempt failed before the successful run. Windows 11 testing for Alpha 0.4 is still pending.</p>
+      <p><a href="https://www.youtube.com/watch?v=prsXkAmUwSo" rel="noreferrer">Watch the Alpha 0.3 gameplay trailer</a></p>
+    </article>
+  </main>
+</body>
+</html>
